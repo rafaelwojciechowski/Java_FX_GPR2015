@@ -5,19 +5,22 @@ public class Traffic {
     private Double segmentLength;
     private int carsTraffic;
     private int busesTraffic;
-    private int deliveryTrucks;
+    private int deliveryTrucksTraffic;
     private int trucksNoTrailersTraffic;
     private int trucksWithTrailersTraffic;
     private int motorbikesTraffic;
     private int tractorsTraffic;
     private int sumTraffic;
 
-    public Traffic(String segmentName, Double segmentLength, int carsTraffic, int busesTraffic, int deliveryTrucks, int trucksNoTrailersTraffic, int trucksWithTrailersTraffic, int motorbikesTraffic, int tractorsTraffic, int sumTraffic) {
+    public Traffic() {
+    }
+
+    public Traffic(String segmentName, Double segmentLength, int carsTraffic, int busesTraffic, int deliveryTrucksTraffic, int trucksNoTrailersTraffic, int trucksWithTrailersTraffic, int motorbikesTraffic, int tractorsTraffic, int sumTraffic) {
         this.segmentName = segmentName;
         this.segmentLength = segmentLength;
         this.carsTraffic = carsTraffic;
         this.busesTraffic = busesTraffic;
-        this.deliveryTrucks = deliveryTrucks;
+        this.deliveryTrucksTraffic = deliveryTrucksTraffic;
         this.trucksNoTrailersTraffic = trucksNoTrailersTraffic;
         this.trucksWithTrailersTraffic = trucksWithTrailersTraffic;
         this.motorbikesTraffic = motorbikesTraffic;
@@ -25,17 +28,6 @@ public class Traffic {
         this.sumTraffic = sumTraffic;
     }
 
-    public Traffic(String segmentName, Double segmentLength, int carsTraffic, int busesTraffic, int deliveryTrucks, int trucksNoTrailersTraffic, int trucksWithTrailersTraffic, int sumTraffic) {
-
-        this.segmentName = segmentName;
-        this.segmentLength = segmentLength;
-        this.carsTraffic = carsTraffic;
-        this.busesTraffic = busesTraffic;
-        this.deliveryTrucks = deliveryTrucks;
-        this.trucksNoTrailersTraffic = trucksNoTrailersTraffic;
-        this.trucksWithTrailersTraffic = trucksWithTrailersTraffic;
-        this.sumTraffic = sumTraffic;
-    }
 
     public String getSegmentName() {
         return segmentName;
@@ -69,12 +61,12 @@ public class Traffic {
         this.busesTraffic = busesTraffic;
     }
 
-    public int getDeliveryTrucks() {
-        return deliveryTrucks;
+    public int getDeliveryTrucksTraffic() {
+        return deliveryTrucksTraffic;
     }
 
-    public void setDeliveryTrucks(int deliveryTrucks) {
-        this.deliveryTrucks = deliveryTrucks;
+    public void setDeliveryTrucksTraffic(int deliveryTrucksTraffic) {
+        this.deliveryTrucksTraffic = deliveryTrucksTraffic;
     }
 
     public int getTrucksNoTrailersTraffic() {
@@ -124,7 +116,7 @@ public class Traffic {
                 ", segmentLength=" + segmentLength +
                 ", carsTraffic=" + carsTraffic +
                 ", busesTraffic=" + busesTraffic +
-                ", deliveryTrucks=" + deliveryTrucks +
+                ", deliveryTrucksTraffic=" + deliveryTrucksTraffic +
                 ", trucksNoTrailersTraffic=" + trucksNoTrailersTraffic +
                 ", trucksWithTrailersTraffic=" + trucksWithTrailersTraffic +
                 ", motorbikesTraffic=" + motorbikesTraffic +

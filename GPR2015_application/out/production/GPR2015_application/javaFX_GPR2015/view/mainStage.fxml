@@ -56,10 +56,10 @@
    <left>
       <VBox prefHeight="344.0" prefWidth="250.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <CheckBox fx:id="checkBoxNational" mnemonicParsing="false" text="National" />
-            <CheckBox fx:id="checkBoxVoivodeship" mnemonicParsing="false" text="Voivodeship" />
-            <TextField fx:id="textFieldRoadNumber" opacity="0.5" prefWidth="150.0" text="Road number" />
-            <TextField fx:id="textFieldRoadName" opacity="0.5" prefWidth="150.0" text="Segement name" />
+            <CheckBox fx:id="checkBoxNational" mnemonicParsing="false" text="National roads" />
+            <CheckBox fx:id="checkBoxVoivodeship" mnemonicParsing="false" text="Voivodeship roads" />
+            <TextField fx:id="textFieldRoadNumber" opacity="0.5" prefWidth="150.0" text="Road number..." />
+            <TextField fx:id="textFieldRoadName" opacity="0.5" prefWidth="150.0" text="Segement name..." />
             <ComboBox fx:id="comboBoxListOfSegmentsFromDB" opacity="0.75" prefWidth="200.0" promptText="Select a segment" />
             <Button fx:id="buttonEraseOneSegment" mnemonicParsing="false" prefWidth="200.0" text="Erase selected segment" />
             <Button fx:id="buttonEraseAllSegments" mnemonicParsing="false" prefWidth="200.0" text="Erase all segments" />
@@ -73,16 +73,16 @@
    <center>
       <TableView fx:id="tableMainGPR2015" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="colGPR2015SegmentName" prefWidth="200.0" text="Segment" />
-          <TableColumn fx:id="colGPR2015Length" prefWidth="75.0" text="Length [km]" />
+          <TableColumn fx:id="colGPR2015SegmentName" prefWidth="400.0" text="Segment" />
+          <TableColumn fx:id="colGPR2015Length" prefWidth="100.0" text="Length [km]" />
             <TableColumn fx:id="colGPR2015Cars" prefWidth="100.0" text="Cars" />
             <TableColumn fx:id="colGPR2015Buses" prefWidth="100.0" text="Buses" />
             <TableColumn fx:id="colGPR2015DeliveryTrucks" prefWidth="100.0" text="Delivery trucks" />
-            <TableColumn fx:id="colGPR2015TrucksNoTrailers" prefWidth="120.0" text="Trucks w/o trailers" />
-            <TableColumn fx:id="colGPR2015TrucksWithTrailers" prefWidth="120.0" text="Trucks with trailers" />
-            <TableColumn fx:id="colGPR2015Tractors" prefWidth="120.0" text="Tractors" />
-            <TableColumn fx:id="colGPR2015Motrobikes" prefWidth="120.0" text="Motorbikes" />
-            <TableColumn fx:id="colGPR2015Sum" prefWidth="120.0" text="Sum" />
+            <TableColumn fx:id="colGPR2015TrucksNoTrailers" prefWidth="150.0" text="Trucks w/o trailers" />
+            <TableColumn fx:id="colGPR2015TrucksWithTrailers" prefWidth="150.0" text="Trucks with trailers" />
+            <TableColumn fx:id="colGPR2015Tractors" prefWidth="100.0" text="Tractors" />
+            <TableColumn fx:id="colGPR2015Motrobikes" prefWidth="100.0" text="Motorbikes" />
+            <TableColumn fx:id="colGPR2015Sum" prefWidth="100.0" text="Sum" />
         </columns>
       </TableView>
    </center>
