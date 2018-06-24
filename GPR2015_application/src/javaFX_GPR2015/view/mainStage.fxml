@@ -23,7 +23,7 @@
         <menus>
           <Menu fx:id="menuMainFile" mnemonicParsing="false" text="File">
             <items>
-              <MenuItem fx:id="menuMainFileClose" mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="menuMainFileClose" mnemonicParsing="false" onAction="#topMenuFileClose" text="Close" />
             </items>
           </Menu>
           <Menu fx:id="menuMainEdit" mnemonicParsing="false" text="Edit">
@@ -61,9 +61,11 @@
             <TextField fx:id="textFieldRoadNumber" opacity="0.5" prefWidth="150.0" text="Road number..." />
             <TextField fx:id="textFieldRoadName" opacity="0.5" prefWidth="150.0" text="Segement name..." />
             <ComboBox fx:id="comboBoxListOfSegmentsFromDB" opacity="0.75" prefWidth="200.0" promptText="Select a segment" />
-            <Button fx:id="buttonEraseOneSegment" mnemonicParsing="false" prefWidth="200.0" text="Erase selected segment" />
-            <Button fx:id="buttonEraseAllSegments" mnemonicParsing="false" prefWidth="200.0" text="Erase all segments" />
-            <Button fx:id="buttonForcest" mnemonicParsing="false" prefWidth="200.0" text="Forecast" />
+            <Button fx:id="buttonAddSegementFromComboBox" mnemonicParsing="false" onMouseClicked="#clickedAddOneSegment" prefWidth="200.0" text="Add one segment" />
+            <Button fx:id="buttonEraseOneSegment" mnemonicParsing="false" onMouseClicked="#clickedEraseOneSegment" prefWidth="200.0" text="Erase selected segment" />
+            <Button fx:id="buttonAddAllSegments" mnemonicParsing="false" onMouseClicked="#clickedAddAllSegments" prefWidth="200.0" text="Add all segments" />
+            <Button fx:id="buttonEraseAllSegments" mnemonicParsing="false" onMouseClicked="#clickedEarseAllSegments" prefWidth="200.0" text="Erase all segments" />
+            <Button fx:id="buttonForcest" mnemonicParsing="false" onMouseClicked="#clickedForecast" prefWidth="200.0" text="Forecast for selected" />
          </children>
          <BorderPane.margin>
             <Insets left="15.0" top="20.0" />

@@ -1,10 +1,7 @@
 package javaFX_GPR2015.controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -13,6 +10,7 @@ import javaFX_GPR2015.model.Traffic;
 import javaFX_GPR2015.repositoryMySQL.RepositoryMySQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -24,6 +22,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 
 public class TrafficController {
@@ -69,7 +69,13 @@ public class TrafficController {
     private TextField textFieldRoadName;
 
     @FXML
-    private ComboBox<?> comboBoxListOfSegmentsFromDB;
+    private ComboBox<String> comboBoxListOfSegmentsFromDB;
+
+    @FXML
+    private Button buttonAddAllSegments;
+
+    @FXML
+    private Button buttonAddSegementFromComboBox;
 
     @FXML
     private Button buttonEraseOneSegment;
@@ -114,13 +120,88 @@ public class TrafficController {
     private TableColumn<Traffic, Integer> colGPR2015Sum;
 
     @FXML
-    void initialize() {
+    void clickedAddAllSegments(MouseEvent event) {
         populaTetableMainGPR2015();
+    }
+
+    @FXML
+    void clickedAddOneSegment(MouseEvent event) {
+        populaTetableMainGPR2015One();
+    }
+
+    @FXML
+    void clickedEarseAllSegments(MouseEvent event) {
+        tableMainGPR2015.getItems().clear();
+    }
+
+    @FXML
+    void clickedEraseOneSegment(MouseEvent event) {
+        Traffic selectedItem = tableMainGPR2015.getSelectionModel().getSelectedItem();
+        tableMainGPR2015.getItems().removeAll(selectedItem);
+    }
+
+    @FXML
+    void clickedForecast(MouseEvent event) {
 
     }
 
+    @FXML
+    void topMenuFileClose(ActionEvent event) {
+
+    }
+
+    @FXML
+    void initialize() {
+        populateComboBoxListofSegments();
+        checkBoxNational.selectedProperty().setValue(true);
+        checkBoxVoivodeship.selectedProperty().setValue(true);
+    }
+
     private void populaTetableMainGPR2015() {
+        List<Traffic> trafficList = getTrafficAll();
         ObservableList<Traffic> trafficMainView;
+        tableMainGPR2015.getItems().clear();
+        trafficMainView = FXCollections.observableArrayList(trafficList);
+        colGPR2015SegmentName.setCellValueFactory(new PropertyValueFactory<Traffic, String>("segmentName"));
+        colGPR2015Length.setCellValueFactory(new PropertyValueFactory<Traffic, Double>("segmentLength"));
+        colGPR2015Cars.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("carsTraffic"));
+        colGPR2015Buses.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("busesTraffic"));
+        colGPR2015DeliveryTrucks.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("deliveryTrucksTraffic"));
+        colGPR2015TrucksNoTrailers.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("trucksNoTrailersTraffic"));
+        colGPR2015TrucksWithTrailers.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("trucksWithTrailersTraffic"));
+        colGPR2015Tractors.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("tractorsTraffic"));
+        colGPR2015Motrobikes.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("motorbikesTraffic"));
+        colGPR2015Sum.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("sumTraffic"));
+        tableMainGPR2015.getItems().addAll(trafficMainView);
+    }
+
+    private void populaTetableMainGPR2015One() {
+        List<Traffic> trafficList = getTrafficOne();
+        ObservableList<Traffic> trafficMainView;
+        trafficMainView = FXCollections.observableArrayList(trafficList);
+        colGPR2015SegmentName.setCellValueFactory(new PropertyValueFactory<Traffic, String>("segmentName"));
+        colGPR2015Length.setCellValueFactory(new PropertyValueFactory<Traffic, Double>("segmentLength"));
+        colGPR2015Cars.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("carsTraffic"));
+        colGPR2015Buses.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("busesTraffic"));
+        colGPR2015DeliveryTrucks.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("deliveryTrucksTraffic"));
+        colGPR2015TrucksNoTrailers.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("trucksNoTrailersTraffic"));
+        colGPR2015TrucksWithTrailers.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("trucksWithTrailersTraffic"));
+        colGPR2015Tractors.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("tractorsTraffic"));
+        colGPR2015Motrobikes.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("motorbikesTraffic"));
+        colGPR2015Sum.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("sumTraffic"));
+        tableMainGPR2015.getItems().addAll(trafficMainView);
+    }
+
+    private void populateComboBoxListofSegments(){
+        List<String> segmentNameList = getTrafficSegments();
+        ObservableList<String> comboBoxSegmentList;
+        comboBoxListOfSegmentsFromDB.getItems().clear();
+        comboBoxSegmentList = FXCollections.observableArrayList(segmentNameList);
+        comboBoxListOfSegmentsFromDB.setItems(comboBoxSegmentList);
+
+    }
+
+    private List<Traffic> getTrafficAll() {
         Connection con = repositoryMySQL.getCon();
         List<Traffic> trafficList = new ArrayList<>();
         try {
@@ -153,18 +234,60 @@ public class TrafficController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        tableMainGPR2015.getItems().clear();
-        trafficMainView= FXCollections.observableArrayList(trafficList);
-        colGPR2015SegmentName.setCellValueFactory(new PropertyValueFactory<Traffic, String>("segmentName"));
-        colGPR2015Length.setCellValueFactory(new PropertyValueFactory<Traffic, Double>("segmentLength"));
-        colGPR2015Cars.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("carsTraffic"));
-        colGPR2015Buses.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("busesTraffic"));
-        colGPR2015DeliveryTrucks.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("deliveryTrucksTraffic"));
-        colGPR2015TrucksNoTrailers.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("trucksNoTrailersTraffic"));
-        colGPR2015TrucksWithTrailers.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("trucksWithTrailersTraffic"));
-        colGPR2015Tractors.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("tractorsTraffic"));
-        colGPR2015Motrobikes.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("motorbikesTraffic"));
-        colGPR2015Sum.setCellValueFactory(new PropertyValueFactory<Traffic, Integer>("sumTraffic"));
-        tableMainGPR2015.getItems().addAll(trafficMainView);
+        return trafficList;
+    }
+
+    private List<Traffic> getTrafficOne() {
+        Connection con = repositoryMySQL.getCon();
+        List<Traffic> trafficList = new ArrayList<>();
+        try {
+            PreparedStatement pst = con.prepareStatement("select segmentName, segmentLength, carsTraffic, busesTraffic, deliveryTrucksTraffic, trucksNoTrailersTraffic, trucksWithTrailersTraffic, tractorsTraffic, motorbikesTraffic, (carsTraffic + busesTraffic + deliveryTrucksTraffic + trucksNoTrailersTraffic + trucksWithTrailersTraffic + tractorsTraffic + motorbikesTraffic) as sumTraffic from segmenttraffic WHERE segmentName = ?;");
+            pst.setString(1,comboBoxListOfSegmentsFromDB.getValue());
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()){
+                Traffic traffic = new Traffic();
+                String segmentName = rs.getString("segmentName");
+                Double length = rs.getDouble("segmentLength");
+                int cars = rs.getInt("carsTraffic");
+                int buses = rs.getInt("busesTraffic");
+                int deliveryTrucks = rs.getInt("deliveryTrucksTraffic");
+                int trucksNoTrailers = rs.getInt("trucksNoTrailersTraffic");
+                int trucksWithTrailers = rs.getInt("trucksWithTrailersTraffic");
+                int tractors = rs.getInt("motorbikesTraffic");
+                int motorbikes = rs.getInt("tractorsTraffic");
+                int sum = rs.getInt("sumTraffic");
+                traffic.setSegmentName(segmentName);
+                traffic.setSegmentLength(length);
+                traffic.setCarsTraffic(cars);
+                traffic.setBusesTraffic(buses);
+                traffic.setDeliveryTrucksTraffic(deliveryTrucks);
+                traffic.setTrucksNoTrailersTraffic(trucksNoTrailers);
+                traffic.setTrucksWithTrailersTraffic(trucksWithTrailers);
+                traffic.setTractorsTraffic(tractors);
+                traffic.setMotorbikesTraffic(motorbikes);
+                traffic.setSumTraffic(sum);
+                trafficList.add(traffic);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return trafficList;
+    }
+
+    private List<String> getTrafficSegments() {
+        Connection con = repositoryMySQL.getCon();
+        List<String> segmentNameList = new ArrayList<>();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT st.segmentName, rn.roadClassAndNumber FROM segmenttraffic st LEFT JOIN roadnumber rn ON st.RoadNumber_id = rn.id;");
+            while (rs.next()){
+                String segmentName = rs.getString("segmentName");
+                String roadNumber = rs.getString("roadClassAndNumber");
+                segmentNameList.add(segmentName);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return segmentNameList;
     }
 }
